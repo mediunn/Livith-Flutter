@@ -1,0 +1,17 @@
+import 'package:livith/models/artist.dart';
+import 'package:livith/models/genre.dart';
+import 'package:livith/providers/service_providers.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+/// 전체 장르 목록.
+final genresProvider = FutureProvider.autoDispose<List<Genre>>(
+  (ref) => ref.read(preferenceServiceProvider).fetchGenres(),
+);
+
+/// 키워드 기반 아티스트 검색 결과. 빈 키워드는 빈 목록을 반환한다.
+final artistSearchProvider =
+    FutureProvider.autoDispose.family<List<Artist>, String>((ref, keyword) {
+  if (keyword.trim().isEmpty) return Future.value(const []);
+  return ref.read(preferenceServiceProvider).searchArtists(keyword: keyword);
+});

@@ -5,6 +5,7 @@ import 'package:livith/view_models/auth_view_model.dart';
 import 'package:livith/views/screens/design_system_preview_screen.dart';
 import 'package:livith/views/screens/home_screen.dart';
 import 'package:livith/views/screens/login_screen.dart';
+import 'package:livith/views/screens/onboarding_screen.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -37,7 +38,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: Routes.home, builder: (_, _) => const HomeScreen()),
       GoRoute(
         path: Routes.onboarding,
-        builder: (_, _) => const _OnboardingPlaceholder(),
+        builder: (_, _) => const OnboardingScreen(),
       ),
       GoRoute(
         path: Routes.designSystemPreview,
@@ -46,13 +47,3 @@ final routerProvider = Provider<GoRouter>((ref) {
     ],
   );
 });
-
-/// 온보딩 흐름 placeholder. 온보딩 화면 마일스톤에서 실제 흐름으로 교체한다.
-class _OnboardingPlaceholder extends StatelessWidget {
-  const _OnboardingPlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('온보딩 준비 중')));
-  }
-}
