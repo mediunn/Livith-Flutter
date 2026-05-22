@@ -1,7 +1,7 @@
 /// 도메인 계층에서 사용하는 실패 표현.
 ///
 /// `Service`/`Repository`는 외부(네트워크/저장소) 오류를 이 타입으로 매핑한다.
-sealed class Failure {
+sealed class Failure implements Exception {
   const Failure(this.message);
 
   final String message;
