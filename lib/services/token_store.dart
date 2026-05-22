@@ -6,6 +6,8 @@ abstract interface class TokenStore {
   String? get accessToken;
   String? get refreshToken;
 
+  /// 영속 저장소의 토큰을 메모리 캐시로 적재한다(인메모리 구현은 no-op).
+  Future<void> load();
   Future<void> save({required String accessToken, required String refreshToken});
   Future<void> clear();
 }
@@ -19,6 +21,9 @@ final class InMemoryTokenStore implements TokenStore {
 
   @override
   String? get refreshToken => _refreshToken;
+
+  @override
+  Future<void> load() async {}
 
   @override
   Future<void> save({

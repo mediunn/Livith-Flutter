@@ -24,6 +24,7 @@ final class SecureTokenStore implements TokenStore {
   String? get refreshToken => _refreshToken;
 
   /// 저장소의 토큰을 메모리 캐시로 적재한다. 앱 시작 시 1회 호출한다.
+  @override
   Future<void> load() async {
     _accessToken = await _storage.read(key: _accessKey);
     _refreshToken = await _storage.read(key: _refreshKey);
