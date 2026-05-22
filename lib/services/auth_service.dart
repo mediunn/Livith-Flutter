@@ -7,26 +7,46 @@ import 'package:livith/services/failure.dart';
 
 import 'package:dio/dio.dart';
 
-/// 인증/온보딩 API 클라이언트.
+/// 인증/온보딩 API 인터페이스.
 ///
-/// iOS `AuthRepository`/`OnboardingEndpoint` 대응. 실패는 [mapDioException]으로
-/// 도메인 `Failure`에 매핑해 던진다.
-final class AuthService {
-  AuthService(this._dio);
+/// iOS `AuthRepository`/`OnboardingEndpoint` 대응. 실패는 도메인 `Failure`로 던진다.
+abstract interface class AuthService {
+  /// 애플 로그인. `identityToken`을 전달하고 로그인 상태를 반환한다.
+  Future<LoginStatus> loginWithApple(String identityToken);
+
+  /// 카카오 로그인. 카카오 `accessToken`을 전달하고 로그인 상태를 반환한다.
+  Future<LoginStatus> loginWithKakao(String accessToken);
+
+  /// 회원가입. 성공 시 토큰과 사용자 정보를 반환한다.
+  Future<SignupResult> signup(SignupInfo info);
+
+  /// 닉네임 사용 가능 여부. `available`이 true면 사용 가능하다.
+  Future<bool> isNicknameAvailable(String nickname);
+
+  /// 로그아웃.
+  Future<void> logout(String refreshToken);
+
+  /// 회원 탈퇴.
+  Future<void> withdraw(String reason);
+}
+
+/// Dio 기반 [AuthService] 구현.
+final class DioAuthService implements AuthService {
+  DioAuthService(this._dio);
 
   final Dio _dio;
 
-  /// 애플 로그인. `identityToken`을 전달하고 로그인 상태를 반환한다.
+  @override
   Future<LoginStatus> loginWithApple(String identityToken) {
     return _login('/auth/apple/mobile', {'identityToken': identityToken});
   }
 
-  /// 카카오 로그인. 카카오 `accessToken`을 전달하고 로그인 상태를 반환한다.
+  @override
   Future<LoginStatus> loginWithKakao(String accessToken) {
     return _login('/auth/kakao/mobile', {'accessToken': accessToken});
   }
 
-  /// 회원가입. 성공 시 토큰과 사용자 정보를 반환한다.
+  @override
   Future<SignupResult> signup(SignupInfo info) async {
     try {
       final response = await _dio.post<Map<String, dynamic>>(
@@ -45,7 +65,7 @@ final class AuthService {
     }
   }
 
-  /// 닉네임 사용 가능 여부. `available`이 true면 사용 가능하다.
+  @override
   Future<bool> isNicknameAvailable(String nickname) async {
     try {
       final response = await _dio.get<Map<String, dynamic>>(
@@ -58,7 +78,7 @@ final class AuthService {
     }
   }
 
-  /// 로그아웃.
+  @override
   Future<void> logout(String refreshToken) async {
     try {
       await _dio.post<Map<String, dynamic>>(
@@ -70,7 +90,7 @@ final class AuthService {
     }
   }
 
-  /// 회원 탈퇴.
+  @override
   Future<void> withdraw(String reason) async {
     try {
       await _dio.post<Map<String, dynamic>>(

@@ -5,15 +5,24 @@ import 'package:livith/services/failure.dart';
 
 import 'package:dio/dio.dart';
 
-/// 사용자 정보 API 클라이언트.
+/// 사용자 정보 API 인터페이스.
 ///
 /// iOS `UserRepository`/`UserEndpoint` 대응. 인증이 필요한 요청만 다룬다.
-final class UserService {
-  UserService(this._dio);
+abstract interface class UserService {
+  /// 현재 로그인한 사용자 정보를 조회한다.
+  Future<User> fetchMe();
+
+  /// 닉네임을 수정하고 갱신된 사용자 정보를 반환한다.
+  Future<User> updateNickname(String nickname);
+}
+
+/// Dio 기반 [UserService] 구현.
+final class DioUserService implements UserService {
+  DioUserService(this._dio);
 
   final Dio _dio;
 
-  /// 현재 로그인한 사용자 정보를 조회한다.
+  @override
   Future<User> fetchMe() async {
     try {
       final response = await _dio.get<Map<String, dynamic>>('/users/me');
@@ -23,7 +32,7 @@ final class UserService {
     }
   }
 
-  /// 닉네임을 수정하고 갱신된 사용자 정보를 반환한다.
+  @override
   Future<User> updateNickname(String nickname) async {
     try {
       final response = await _dio.patch<Map<String, dynamic>>(
