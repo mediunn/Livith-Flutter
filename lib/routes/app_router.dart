@@ -6,7 +6,9 @@ import 'package:livith/views/screens/design_system_preview_screen.dart';
 import 'package:livith/views/screens/concert_detail_screen.dart';
 import 'package:livith/views/screens/login_screen.dart';
 import 'package:livith/views/screens/main_tab_screen.dart';
+import 'package:livith/views/screens/nickname_edit_screen.dart';
 import 'package:livith/views/screens/onboarding_screen.dart';
+import 'package:livith/views/screens/setting_screen.dart';
 import 'package:livith/views/screens/song_lyrics_screen.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -54,6 +56,8 @@ final routerProvider = Provider<GoRouter>((ref) {
           songId: int.parse(state.pathParameters['id']!),
         ),
       ),
+      GoRoute(path: '/setting', builder: (_, _) => const SettingScreen()),
+      GoRoute(path: '/nickname-edit', builder: (_, _) => const NicknameEditScreen()),
       GoRoute(
         path: Routes.designSystemPreview,
         builder: (_, _) => const DesignSystemPreviewScreen(),
