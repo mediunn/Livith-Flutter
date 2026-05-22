@@ -8,6 +8,7 @@ import 'package:livith/views/widgets/livith_card.dart';
 import 'package:livith/views/widgets/livith_navigation_bar.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 /// 홈 화면.
 ///
@@ -77,7 +78,7 @@ class _ConcertRow extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         itemCount: concertList.length,
         separatorBuilder: (_, _) => const SizedBox(width: 12),
-        itemBuilder: (_, index) => _card(concertList[index]),
+        itemBuilder: (context, index) => _card(context, concertList[index]),
       ),
     );
   }
@@ -95,17 +96,18 @@ class _ConcertGrid extends StatelessWidget {
       child: Wrap(
         spacing: 12,
         runSpacing: 16,
-        children: [for (final concert in concertList) _card(concert)],
+        children: [for (final concert in concertList) _card(context, concert)],
       ),
     );
   }
 }
 
-Widget _card(Concert concert) {
+Widget _card(BuildContext context, Concert concert) {
   return LivithCard(
     imageUrl: concert.posterUrl,
     title: concert.title,
     subtitle: concert.venue,
     titleLineLimit: 2,
+    onTap: () => context.push('/concert/${concert.id}'),
   );
 }

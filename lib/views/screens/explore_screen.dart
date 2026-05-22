@@ -10,6 +10,7 @@ import 'package:livith/views/widgets/livith_chip.dart';
 import 'package:livith/views/widgets/livith_navigation_bar.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 /// 탐색 화면.
 ///
@@ -105,6 +106,7 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                   title: concert.title,
                   subtitle: concert.venue,
                   titleLineLimit: 2,
+                  onTap: () => context.push('/concert/${concert.id}'),
                 ),
             ],
           ),
