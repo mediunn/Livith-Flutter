@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:livith/routes/routes.dart';
 import 'package:livith/view_models/auth_view_model.dart';
 import 'package:livith/views/screens/design_system_preview_screen.dart';
-import 'package:livith/views/screens/home_screen.dart';
 import 'package:livith/views/screens/login_screen.dart';
+import 'package:livith/views/screens/main_tab_screen.dart';
 import 'package:livith/views/screens/onboarding_screen.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,7 +35,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     },
     routes: [
       GoRoute(path: Routes.login, builder: (_, _) => const LoginScreen()),
-      GoRoute(path: Routes.home, builder: (_, _) => const HomeScreen()),
+      GoRoute(path: Routes.home, builder: (_, _) => const MainTabScreen()),
       GoRoute(
         path: Routes.onboarding,
         builder: (_, _) => const OnboardingScreen(),
