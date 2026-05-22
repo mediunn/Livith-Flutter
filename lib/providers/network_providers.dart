@@ -7,10 +7,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-/// API 베이스 URL. 환경별 값은 `--dart-define=LIVITH_API_BASE_URL=...`로 주입한다.
+/// API 베이스 URL. 기본값은 개발(staging) 서버이며,
+/// 배포 빌드는 `--dart-define=LIVITH_API_BASE_URL=https://api.livith.site/api/v6`로 주입한다.
 const String _apiBaseUrl = String.fromEnvironment(
   'LIVITH_API_BASE_URL',
-  defaultValue: 'https://api.livith.app/api/v6',
+  defaultValue: 'https://staging-api.livith.site/api/v6',
 );
 
 BaseOptions _baseOptions() => BaseOptions(
