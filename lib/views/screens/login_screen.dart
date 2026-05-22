@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:livith/core/theme/livith_colors.dart';
 import 'package:livith/core/theme/livith_typography.dart';
 import 'package:livith/models/social_provider.dart';
+import 'package:livith/providers/integration_providers.dart';
 import 'package:livith/view_models/auth_view_model.dart';
 import 'package:livith/views/widgets/livith_button.dart';
 
@@ -56,6 +57,7 @@ class LoginScreen extends ConsumerWidget {
   }
 
   void _login(WidgetRef ref, SocialProvider provider) {
+    ref.read(analyticsServiceProvider).track('click_login', {'provider': provider.value});
     ref.read(authViewModelProvider.notifier).loginWith(provider);
   }
 }
