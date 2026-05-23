@@ -7,6 +7,9 @@ abstract interface class NotificationService {
 
   /// FCM 토큰 등록을 해제한다.
   Future<void> unregisterToken();
+
+  /// 마케팅 정보 수신 동의를 갱신한다.
+  Future<void> updateMarketingConsent({required bool agreed});
 }
 
 /// 키/네이티브 설정 전 사용하는 stub 구현.
@@ -18,4 +21,7 @@ final class StubNotificationService implements NotificationService {
 
   @override
   Future<void> unregisterToken() async {}
+
+  @override
+  Future<void> updateMarketingConsent({required bool agreed}) async {}
 }

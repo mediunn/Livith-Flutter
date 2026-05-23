@@ -7,6 +7,7 @@ import 'package:livith/views/screens/concert_detail_screen.dart';
 import 'package:livith/views/screens/login_screen.dart';
 import 'package:livith/views/screens/main_tab_screen.dart';
 import 'package:livith/views/screens/nickname_edit_screen.dart';
+import 'package:livith/views/screens/notice_setting_screen.dart';
 import 'package:livith/views/screens/onboarding_screen.dart';
 import 'package:livith/views/screens/setting_screen.dart';
 import 'package:livith/views/screens/song_lyrics_screen.dart';
@@ -57,6 +58,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         ),
       ),
       GoRoute(path: '/setting', builder: (_, _) => const SettingScreen()),
+      GoRoute(path: '/notice-setting', builder: (_, _) => const NoticeSettingScreen()),
       GoRoute(path: '/nickname-edit', builder: (_, _) => const NicknameEditScreen()),
       GoRoute(
         path: Routes.designSystemPreview,

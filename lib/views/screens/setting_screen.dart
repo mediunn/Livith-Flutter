@@ -23,6 +23,12 @@ class SettingScreen extends ConsumerWidget {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: const Text('알림 설정'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => context.push('/notice-setting'),
+            ),
             const Spacer(),
             LivithButton(
               '로그아웃',
