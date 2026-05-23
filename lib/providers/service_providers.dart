@@ -1,5 +1,6 @@
 import 'package:livith/providers/network_providers.dart';
 import 'package:livith/services/auth_service.dart';
+import 'package:livith/services/comment_service.dart';
 import 'package:livith/services/concert_service.dart';
 import 'package:livith/services/preference_service.dart';
 import 'package:livith/services/search_service.dart';
@@ -43,6 +44,11 @@ final setlistServiceProvider = Provider<SetlistService>(
 /// 곡 가사 Service.
 final songServiceProvider = Provider<SongService>(
   (ref) => DioSongService(ref.read(dioProvider)),
+);
+
+/// 콘서트 댓글 Service.
+final commentServiceProvider = Provider<CommentService>(
+  (ref) => DioCommentService(ref.read(dioProvider)),
 );
 
 /// 소셜 로그인 토큰 획득 Service. 키 확보 전까지 stub을 사용한다.
