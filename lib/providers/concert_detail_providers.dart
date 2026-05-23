@@ -1,4 +1,5 @@
 import 'package:livith/models/concert.dart';
+import 'package:livith/models/concert_artist.dart';
 import 'package:livith/models/concert_comment.dart';
 import 'package:livith/models/setlist.dart';
 import 'package:livith/models/song_lyrics.dart';
@@ -37,4 +38,10 @@ final songLyricsProvider =
 final concertCommentsProvider =
     FutureProvider.autoDispose.family<List<ConcertComment>, int>((ref, concertId) {
   return ref.read(commentServiceProvider).fetchComments(concertId);
+});
+
+/// 콘서트 아티스트 상세.
+final concertArtistProvider =
+    FutureProvider.autoDispose.family<ConcertArtist, int>((ref, concertId) {
+  return ref.read(concertServiceProvider).fetchArtist(concertId);
 });

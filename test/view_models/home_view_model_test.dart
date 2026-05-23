@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:livith/models/concert.dart';
+import 'package:livith/models/concert_artist.dart';
 import 'package:livith/providers/service_providers.dart';
 import 'package:livith/services/concert_service.dart';
 import 'package:livith/view_models/home_view_model.dart';
@@ -24,6 +25,9 @@ class _FakeConcertService implements ConcertService {
 
   @override
   Future<Concert> fetchConcert(int id) => throw UnimplementedError();
+
+  @override
+  Future<ConcertArtist> fetchArtist(int concertId) => throw UnimplementedError();
 }
 
 Concert _concert(int id) => Concert(

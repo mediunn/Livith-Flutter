@@ -42,19 +42,62 @@ class _ConcertDetailScreenState extends ConsumerState<ConcertDetailScreen> {
         data: (detail) => Column(
           children: [
             SegmentedTabBar(
-              tabs: const ['정보', '셋리스트', '커뮤니티'],
+              tabs: const ['아티스트', '정보', '셋리스트', '커뮤니티'],
               selectedIndex: _tab,
               onTabSelected: (index) => setState(() => _tab = index),
+              isScrollable: true,
+              tabWidth: 96,
             ),
             Expanded(
               child: switch (_tab) {
-                0 => _InfoTab(concert: detail.concert),
-                1 => _SetlistTab(setlistList: detail.setlistList),
+                0 => _ArtistTab(concertId: widget.concertId),
+                1 => _InfoTab(concert: detail.concert),
+                2 => _SetlistTab(setlistList: detail.setlistList),
                 _ => _CommunityTab(concertId: widget.concertId),
               },
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ArtistTab extends ConsumerWidget {
+  const _ArtistTab({required this.concertId});
+
+  final int concertId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final artistAsync = ref.watch(concertArtistProvider(concertId));
+
+    return artistAsync.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, _) => Center(
+        child: Text('아티스트 정보를 불러오지 못했어요', style: LivithTextStyles.body3Regular),
+      ),
+      data: (artist) => ListView(
+        padding: const EdgeInsets.all(20),
+        children: [
+          if (artist.imageUrl != null)
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: SizedBox(height: 200, child: AsyncImageView(url: artist.imageUrl)),
+            ),
+          const SizedBox(height: 16),
+          Text(
+            artist.name,
+            style: LivithTextStyles.headSemibold.copyWith(color: LivithColors.white100),
+          ),
+          if (artist.introduction != null) ...[
+            const SizedBox(height: 12),
+            Text(
+              artist.introduction!,
+              style: LivithTextStyles.body3Regular.copyWith(color: LivithColors.black30),
+            ),
+          ],
+        ],
       ),
     );
   }

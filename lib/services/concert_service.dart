@@ -1,4 +1,5 @@
 import 'package:livith/models/concert.dart';
+import 'package:livith/models/concert_artist.dart';
 import 'package:livith/services/api_response.dart';
 import 'package:livith/services/dio_failure_mapper.dart';
 import 'package:livith/services/failure.dart';
@@ -17,6 +18,9 @@ abstract interface class ConcertService {
 
   /// 콘서트 단건 상세.
   Future<Concert> fetchConcert(int id);
+
+  /// 콘서트 아티스트 상세.
+  Future<ConcertArtist> fetchArtist(int concertId);
 }
 
 /// Dio 기반 [ConcertService] 구현.
@@ -46,6 +50,24 @@ final class DioConcertService implements ConcertService {
       final data = parsed.data;
       if (data == null) throw const ParsingFailure();
       return Concert.fromJson(data);
+    } on DioException catch (exception) {
+      throw mapDioException(exception);
+    }
+  }
+
+  @override
+  Future<ConcertArtist> fetchArtist(int concertId) async {
+    try {
+      final response = await _dio.get<Map<String, dynamic>>(
+        '/concerts/$concertId/artist',
+      );
+      final parsed = ApiResponse<Map<String, dynamic>>.fromJson(
+        response.data ?? const {},
+        (data) => data as Map<String, dynamic>,
+      );
+      final data = parsed.data;
+      if (data == null) throw const ParsingFailure();
+      return ConcertArtist.fromJson(data);
     } on DioException catch (exception) {
       throw mapDioException(exception);
     }
