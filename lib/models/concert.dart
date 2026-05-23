@@ -51,7 +51,7 @@ final class Concert {
       title: json['title'] as String? ?? '',
       artist: json['artist'] as String? ?? '',
       status: ConcertStatus.fromValue(json['status'] as String?),
-      posterUrl: json['posterUrl'] as String?,
+      posterUrl: (json['poster'] ?? json['posterUrl']) as String?,
       startDate: json['startDate'] as String?,
       endDate: json['endDate'] as String?,
       venue: json['venue'] as String?,

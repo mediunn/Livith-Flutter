@@ -19,7 +19,7 @@ void main() {
         'title': 'Eras Tour',
         'artist': 'Taylor Swift',
         'status': 'UPCOMING',
-        'posterUrl': 'https://img/p.jpg',
+        'poster': 'https://img/p.jpg',
         'startDate': '2026-06-01',
         'endDate': '2026-06-02',
         'venue': '고척돔',

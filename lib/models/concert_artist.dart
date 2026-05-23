@@ -14,9 +14,9 @@ final class ConcertArtist {
 
   factory ConcertArtist.fromJson(Map<String, dynamic> json) {
     return ConcertArtist(
-      name: json['name'] as String? ?? '',
-      imageUrl: json['imageUrl'] as String?,
-      introduction: json['introduction'] as String?,
+      name: (json['artist'] ?? json['name']) as String? ?? '',
+      imageUrl: (json['imgUrl'] ?? json['imageUrl']) as String?,
+      introduction: (json['detail'] ?? json['introduction']) as String?,
     );
   }
 }

@@ -2,6 +2,27 @@
 
 ## 기록
 
+### 2026-05-23 13:00 - 실제 staging API 응답과 모델 키 불일치
+
+**상황**
+- 테스트 토큰으로 staging API(`/users/me`, `/genres`, `/search/concerts`, `/concerts/{id}`, `.../artist`, `.../comments`)를 호출해 모델 fromJson 키를 대조했다.
+
+**문제**
+- 콘서트 포스터 키가 `posterUrl`이 아니라 `poster`였다.
+- 아티스트 응답의 이름/소개 키가 `name`/`introduction`이 아니라 `artist`/`detail`이었다.
+- `/search/concerts`, `/concerts/{id}/comments`는 `data`가 `{ data: [...], cursor, totalCount }`로 한 단계 더 중첩되어 있었다(추천/셋리스트/장르는 `data` 직접 배열).
+
+**원인**
+- iOS DTO의 Swift 프로퍼티명을 서버 JSON 키로 추정했으나 실제 키와 달랐고, 검색/댓글은 페이지네이션 래퍼가 추가로 있었다.
+
+**해결**
+- `Concert.fromJson` 포스터 키를 `poster`로, `ConcertArtist.fromJson`을 `artist`/`detail`로 수정.
+- `SearchService`/`CommentService`의 응답 파싱을 `data.data` 중첩 구조에 맞게 수정.
+
+**교훈**
+- JSON 키는 추정하지 말고 실제 응답으로 대조한다. 목록 응답은 페이지네이션 래퍼 중첩 여부를 먼저 확인한다.
+
+
 ### 2026-05-22 19:03 - LivithChip이 가로 전체 너비로 늘어남
 
 **상황**

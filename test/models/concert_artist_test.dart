@@ -6,9 +6,9 @@ void main() {
   group('ConcertArtist.fromJson은', () {
     test('name과 선택 필드(imageUrl/introduction)를 파싱한다', () {
       final artist = ConcertArtist.fromJson({
-        'name': 'Taylor Swift',
-        'imageUrl': 'https://img/a.jpg',
-        'introduction': '미국의 싱어송라이터',
+        'artist': 'Taylor Swift',
+        'imgUrl': 'https://img/a.jpg',
+        'detail': '미국의 싱어송라이터',
       });
 
       expect(artist.name, 'Taylor Swift');
@@ -17,7 +17,7 @@ void main() {
     });
 
     test('선택 필드가 없으면 null로 둔다', () {
-      final artist = ConcertArtist.fromJson({'name': 'IU'});
+      final artist = ConcertArtist.fromJson({'artist': 'IU'});
 
       expect(artist.imageUrl, isNull);
       expect(artist.introduction, isNull);

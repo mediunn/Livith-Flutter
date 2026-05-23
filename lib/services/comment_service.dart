@@ -30,12 +30,12 @@ final class DioCommentService implements CommentService {
       final response = await _dio.get<Map<String, dynamic>>(
         '/concerts/$concertId/comments',
       );
-      final parsed = ApiResponse<List<dynamic>>.fromJson(
+      final parsed = ApiResponse<Map<String, dynamic>>.fromJson(
         response.data ?? const {},
-        (data) => data as List<dynamic>,
+        (data) => data as Map<String, dynamic>,
       );
-      final data = parsed.data ?? const [];
-      return data
+      final list = (parsed.data?['data'] as List<dynamic>?) ?? const [];
+      return list
           .cast<Map<String, dynamic>>()
           .map(ConcertComment.fromJson)
           .toList();

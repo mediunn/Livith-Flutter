@@ -30,12 +30,12 @@ final class DioSearchService implements SearchService {
           'size': 30,
         },
       );
-      final parsed = ApiResponse<List<dynamic>>.fromJson(
+      final parsed = ApiResponse<Map<String, dynamic>>.fromJson(
         response.data ?? const {},
-        (data) => data as List<dynamic>,
+        (data) => data as Map<String, dynamic>,
       );
-      final data = parsed.data ?? const [];
-      return data.cast<Map<String, dynamic>>().map(Concert.fromJson).toList();
+      final list = (parsed.data?['data'] as List<dynamic>?) ?? const [];
+      return list.cast<Map<String, dynamic>>().map(Concert.fromJson).toList();
     } on DioException catch (exception) {
       throw mapDioException(exception);
     }
