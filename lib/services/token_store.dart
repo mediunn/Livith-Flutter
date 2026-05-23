@@ -13,6 +13,11 @@ abstract interface class TokenStore {
 }
 
 final class InMemoryTokenStore implements TokenStore {
+  InMemoryTokenStore({String? accessToken, String? refreshToken}) {
+    _accessToken = accessToken;
+    _refreshToken = refreshToken;
+  }
+
   String? _accessToken;
   String? _refreshToken;
 

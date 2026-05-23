@@ -2,6 +2,27 @@
 
 ## 기록
 
+### 2026-05-23 13:20 - 검색 genre 파라미터 형식 & http 포스터 로딩 실패
+
+**상황**
+- 개발 토큰을 `--dart-define=LIVITH_DEV_TOKEN`으로 주입해 에뮬레이터에서 실제 staging 데이터로 탐색/검색을 통합 확인했다.
+
+**문제**
+- 장르 선택 검색이 무한 로딩됐다. `/search/concerts?genre=1` 호출이 `400 (genre는 JPOP|... 중 하나여야 해요)`였다.
+- 콘서트 포스터가 회색(미표시)이었다.
+
+**원인**
+- 검색 `genre` 파라미터는 장르 **ID(int)** 가 아니라 장르 **이름(String, "JPOP" 등)** 을 받는다.
+- 포스터 URL이 `http://`(kopis.or.kr)인데 Android 9+가 cleartext HTTP를 기본 차단한다.
+
+**해결**
+- `SearchQuery.genreIdList`(int) → `genreNameList`(String)로 변경하고 `ExploreScreen`이 `genre.name`을 전송하도록 수정.
+- `AndroidManifest.xml`에 `android:usesCleartextTraffic="true"` 추가.
+
+**교훈**
+- 검색/필터 파라미터 타입(ID vs 코드명)은 실제 API로 확인한다. 외부 이미지가 http면 cleartext 허용 또는 https 프록시가 필요하다.
+
+
 ### 2026-05-23 13:00 - 실제 staging API 응답과 모델 키 불일치
 
 **상황**
