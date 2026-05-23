@@ -26,7 +26,7 @@ final class DioSearchService implements SearchService {
         '/search/concerts',
         queryParameters: {
           if (query.keyword.trim().isNotEmpty) 'keyword': query.keyword.trim(),
-          if (query.genreIdList.isNotEmpty) 'genre': query.genreIdList,
+          if (query.genreNameList.isNotEmpty) 'genre': query.genreNameList,
           'size': 30,
         },
       );

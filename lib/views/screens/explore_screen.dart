@@ -24,10 +24,10 @@ class ExploreScreen extends ConsumerStatefulWidget {
 
 class _ExploreScreenState extends ConsumerState<ExploreScreen> {
   String _keyword = '';
-  final Set<int> _genreIdSet = {};
+  final Set<String> _genreNameSet = {};
 
   SearchQuery get _query =>
-      SearchQuery(keyword: _keyword, genreIdList: _genreIdSet.toList());
+      SearchQuery(keyword: _keyword, genreNameList: _genreNameSet.toList());
 
   @override
   Widget build(BuildContext context) {
@@ -58,13 +58,13 @@ class _ExploreScreenState extends ConsumerState<ExploreScreen> {
                       padding: const EdgeInsets.only(right: 8),
                       child: GestureDetector(
                         onTap: () => setState(() {
-                          _genreIdSet.contains(genre.id)
-                              ? _genreIdSet.remove(genre.id)
-                              : _genreIdSet.add(genre.id);
+                          _genreNameSet.contains(genre.name)
+                              ? _genreNameSet.remove(genre.name)
+                              : _genreNameSet.add(genre.name);
                         }),
                         child: LivithChip(
                           genre.name,
-                          style: _genreIdSet.contains(genre.id)
+                          style: _genreNameSet.contains(genre.name)
                               ? LivithChipStyle.selected
                               : LivithChipStyle.status,
                         ),
