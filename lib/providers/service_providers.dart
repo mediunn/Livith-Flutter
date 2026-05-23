@@ -2,6 +2,7 @@ import 'package:livith/providers/network_providers.dart';
 import 'package:livith/services/auth_service.dart';
 import 'package:livith/services/comment_service.dart';
 import 'package:livith/services/concert_service.dart';
+import 'package:livith/services/kakao_social_auth_service.dart';
 import 'package:livith/services/preference_service.dart';
 import 'package:livith/services/search_service.dart';
 import 'package:livith/services/setlist_service.dart';
@@ -51,7 +52,12 @@ final commentServiceProvider = Provider<CommentService>(
   (ref) => DioCommentService(ref.read(dioProvider)),
 );
 
-/// 소셜 로그인 토큰 획득 Service. 키 확보 전까지 stub을 사용한다.
+/// 카카오 네이티브 앱키. `--dart-define=KAKAO_NATIVE_APP_KEY=...`로 주입한다.
+const String _kakaoNativeAppKey = String.fromEnvironment('KAKAO_NATIVE_APP_KEY');
+
+/// 소셜 로그인 토큰 획득 Service. 카카오 키가 주입되면 실제 SDK, 아니면 stub을 사용한다.
 final socialAuthServiceProvider = Provider<SocialAuthService>(
-  (ref) => const StubSocialAuthService(),
+  (ref) => _kakaoNativeAppKey.isEmpty
+      ? const StubSocialAuthService()
+      : const KakaoSocialAuthService(),
 );
