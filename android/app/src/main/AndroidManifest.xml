@@ -2,7 +2,10 @@
     <application
         android:label="livith"
         android:name="${applicationName}"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
+        <!-- 일부 공연 포스터가 http(kopis.or.kr)로 제공되어 cleartext를 허용한다. -->
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
