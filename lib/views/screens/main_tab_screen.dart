@@ -6,6 +6,7 @@ import 'package:livith/views/screens/home_screen.dart';
 import 'package:livith/views/screens/user_screen.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 /// 메인 탭(홈/탐색/마이) 컨테이너.
 ///
@@ -33,12 +34,33 @@ class _MainTabScreenState extends ConsumerState<MainTabScreen> {
         selectedItemColor: LivithColors.yellow30,
         unselectedItemColor: LivithColors.black50,
         type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: '홈'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: '탐색'),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: '마이'),
+        items: [
+          BottomNavigationBarItem(
+            icon: _icon('assets/icons/home_disabled.svg'),
+            activeIcon: _icon('assets/icons/home_enabled.svg'),
+            label: '홈',
+          ),
+          BottomNavigationBarItem(
+            icon: _icon('assets/icons/search.svg', color: LivithColors.black50),
+            activeIcon: _icon('assets/icons/search.svg', color: LivithColors.yellow30),
+            label: '탐색',
+          ),
+          BottomNavigationBarItem(
+            icon: _icon('assets/icons/my_disabled.svg'),
+            activeIcon: _icon('assets/icons/my_enabled.svg'),
+            label: '마이',
+          ),
         ],
       ),
+    );
+  }
+
+  Widget _icon(String asset, {Color? color}) {
+    return SvgPicture.asset(
+      asset,
+      width: 24,
+      height: 24,
+      colorFilter: color == null ? null : ColorFilter.mode(color, BlendMode.srcIn),
     );
   }
 }
