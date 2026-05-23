@@ -26,10 +26,7 @@ class LoginScreen extends ConsumerWidget {
           child: Column(
             children: [
               const Spacer(),
-              Text(
-                'Livith',
-                style: LivithTextStyles.title.copyWith(color: LivithColors.white100),
-              ),
+              Image.asset('assets/images/livith_logo.png', height: 36),
               const SizedBox(height: 8),
               Text(
                 '내한 공연의 모든 것',

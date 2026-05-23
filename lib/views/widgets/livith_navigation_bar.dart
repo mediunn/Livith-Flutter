@@ -86,10 +86,7 @@ class LivithNavigationBar extends StatelessWidget implements PreferredSizeWidget
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            'Livith',
-            style: LivithTextStyles.title.copyWith(color: LivithColors.white100),
-          ),
+          Image.asset('assets/images/livith_logo.png', height: 24),
           IconButton(
             onPressed: onNoticeTap,
             icon: Icon(
