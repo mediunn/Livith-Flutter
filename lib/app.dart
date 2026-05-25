@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:livith/routes/routes.dart';
-import 'package:livith/views/screens/home_screen.dart';
+import 'package:livith/core/theme/livith_theme.dart';
+import 'package:livith/routes/app_router.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,16 +10,10 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Livith',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      initialRoute: Routes.home,
-      routes: {
-        Routes.home: (_) => const HomeScreen(),
-      },
+      theme: LivithTheme.dark,
+      routerConfig: ref.watch(routerProvider),
     );
   }
 }
